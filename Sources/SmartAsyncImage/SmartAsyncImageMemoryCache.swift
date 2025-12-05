@@ -53,7 +53,7 @@ public actor SmartAsyncImageMemoryCache: SmartAsyncImageMemoryCacheProtocol {
             }
             cache.setObject(image, forKey: url as NSURL)
             try Task.checkCancellation()
-            try await self.diskCache.save(image, key: url)
+            Task.detached(priority: .utility) { try await self.diskCache.save(image, key: url) }
             return image
         }
         // 4. store the task

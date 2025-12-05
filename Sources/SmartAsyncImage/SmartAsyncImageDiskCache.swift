@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 
 public struct SmartAsyncImageDiskCache: Sendable {
+    
     public let directory: URL
     public let encoder: SmartAsyncImageEncoder
     
@@ -21,36 +22,47 @@ public struct SmartAsyncImageDiskCache: Sendable {
     public func save(
         _ image: UIImage,
         key: URL
-    ) async throws {
+    ) throws {
         guard let data = image.pngData() else {
             throw CocoaError(.fileWriteUnknown)
         }
         let filename = encoder.encode(key) + ".img"
         let url = directory.appendingPathComponent(filename)
-        try await Task(priority: .utility) {
-            try Task.checkCancellation()
-            try data.write(to: url, options: .atomic)
-        }.value
+        try data.write(to: url, options: .atomic)
     }
-    
+        
     public func load(
         key: URL
-    ) async throws -> UIImage? {
+    ) throws -> UIImage? {
         let filename = encoder.encode(key) + ".img"
         let url = directory.appendingPathComponent(filename)
-        return try await Task(priority: .utility) {
-            try Task.checkCancellation()
-            let data: Data
-            do {
-                data = try Data(contentsOf: url, options: [.mappedIfSafe])
-            } catch {
-                return nil // file not found or permission error.
-            }
-            try Task.checkCancellation()
-            guard let image = UIImage(data: data)?.preparingForDisplay() else {
-                throw CocoaError(.fileReadCorruptFile)
-            }
-            return image
-        }.value
+        let data: Data
+        do {
+            data = try Data(contentsOf: url) // , options: [.mappedIfSafe])
+        } catch {
+            return nil // file not found or permission error.
+        }
+        guard let image = UIImage(data: data) else { // ?.preparingForDisplay
+            throw CocoaError(.fileReadCorruptFile)
+        }
+        return image
+    }
+
+    /// Forces the image to fully decode and redraw itself into a new context.
+    /// This sanitizes the image data without using lossy compression (like JPEG).
+    func sanitizedLossless(image: UIImage) -> UIImage? {
+        let size = image.size
+        
+        // 1. Create a renderer for the image's original size and scale.
+        // The 'opaque: false' and 'scale: 0.0' ensure it respects transparency
+        // and uses the device's main screen scale (e.g., @3x).
+        let renderer = UIGraphicsImageRenderer(size: size, format: image.imageRendererFormat)
+        
+        // 2. Draw the image into the new context. This forces the decoding.
+        let sanitizedImage = renderer.image { _ in
+            image.draw(in: CGRect(origin: .zero, size: size))
+        }
+        
+        return sanitizedImage
     }
 }
