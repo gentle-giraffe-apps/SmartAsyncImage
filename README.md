@@ -56,3 +56,15 @@ struct MinimalRemoteImageView: View {
     }
 }
 ```
+
+## Architecture
+
+```mermaid
+flowchart TD
+    SAI["SmartAsyncImage<br/>(SwiftUI View)"] --> VM["SmartAsyncImage<br/>ViewModel"]
+    VM --> Phase["SmartAsyncImage<br/>Phase"]
+    VM --> MemProto["SmartAsyncImageMemory<br/>CacheProtocol"]
+    MemProto --> Mem["SmartAsyncImage<br/>MemoryCache<br/>(actor)"]
+    Mem --> Disk["SmartAsyncImage<br/>DiskCache"]
+    Disk --> Encoder["SmartAsyncImage<br/>Encoder"]
+    Mem --> URLSession[["URLSession"]]
