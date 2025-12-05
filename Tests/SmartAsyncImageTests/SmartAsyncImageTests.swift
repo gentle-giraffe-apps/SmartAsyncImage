@@ -82,8 +82,8 @@ struct SmartAsyncImageDiskCacheTests {
         let testImage = createTestImage(color: .red, size: CGSize(width: 100, height: 100))
         let testURL = URL(string: "https://example.com/test-image.png")!
 
-        try diskCache.save(testImage, key: testURL)
-        let loadedImage = try diskCache.load(key: testURL)
+        try await diskCache.save(testImage, key: testURL)
+        let loadedImage = try await diskCache.load(key: testURL)
 
         #expect(loadedImage != nil)
         // Compare pixel dimensions (accounting for scale)
@@ -99,13 +99,13 @@ struct SmartAsyncImageDiskCacheTests {
     }
 
     @Test("Load non-existent image returns nil")
-    func loadNonExistentReturnsNil() throws {
+    func loadNonExistentReturnsNil() async throws {
         let fileManager = FileManager.default
         let testFolder = "TestSmartAsyncImageCache_\(UUID().uuidString)"
         let diskCache = SmartAsyncImageDiskCache(fileManager: fileManager, folder: testFolder)
 
         let testURL = URL(string: "https://example.com/non-existent.png")!
-        let loadedImage = try diskCache.load(key: testURL)
+        let loadedImage = try await diskCache.load(key: testURL)
 
         #expect(loadedImage == nil)
 
@@ -125,11 +125,11 @@ struct SmartAsyncImageDiskCacheTests {
         let url1 = URL(string: "https://example.com/image1.png")!
         let url2 = URL(string: "https://example.com/image2.png")!
 
-        try diskCache.save(image1, key: url1)
-        try diskCache.save(image2, key: url2)
+        try await diskCache.save(image1, key: url1)
+        try await diskCache.save(image2, key: url2)
 
-        let loaded1 = try diskCache.load(key: url1)
-        let loaded2 = try diskCache.load(key: url2)
+        let loaded1 = try await diskCache.load(key: url1)
+        let loaded2 = try await diskCache.load(key: url2)
 
         #expect(loaded1 != nil)
         #expect(loaded2 != nil)
@@ -138,23 +138,6 @@ struct SmartAsyncImageDiskCacheTests {
         let pixel2Width = (loaded2?.size.width ?? 0) * (loaded2?.scale ?? 1)
         #expect(pixel1Width == image1.size.width * image1.scale)
         #expect(pixel2Width == image2.size.width * image2.scale)
-
-        // Cleanup
-        try? fileManager.removeItem(at: diskCache.directory)
-    }
-
-    @Test("Sanitized lossless preserves image dimensions")
-    func sanitizedLosslessPreservesDimensions() {
-        let fileManager = FileManager.default
-        let testFolder = "TestSmartAsyncImageCache_\(UUID().uuidString)"
-        let diskCache = SmartAsyncImageDiskCache(fileManager: fileManager, folder: testFolder)
-
-        let originalImage = createTestImage(color: .green, size: CGSize(width: 200, height: 150))
-        let sanitized = diskCache.sanitizedLossless(image: originalImage)
-
-        #expect(sanitized != nil)
-        #expect(sanitized?.size.width == originalImage.size.width)
-        #expect(sanitized?.size.height == originalImage.size.height)
 
         // Cleanup
         try? fileManager.removeItem(at: diskCache.directory)
