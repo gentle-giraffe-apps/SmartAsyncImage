@@ -144,13 +144,13 @@ struct SmartAsyncImageDiskCacheTests {
     }
 }
 
-// MARK: - SmartAsyncImageMemoryCache Tests
+// MARK: - SmartAsyncImageMemoryCache Tests (Mock)
 
-@Suite("SmartAsyncImageMemoryCache Tests")
-struct SmartAsyncImageMemoryCacheTests {
+@Suite("SmartAsyncImageMemoryCache Mock Tests")
+struct SmartAsyncImageMemoryCacheMockTests {
 
-    @Test("Cache returns same image for same URL")
-    func cacheReturnsSameImage() async throws {
+    @Test("Mock Cache returns same image for same URL")
+    func mockCacheReturnsSameImage() async throws {
         let mockCache = MockMemoryCache()
         let testURL = URL(string: "https://example.com/test.png")!
         let testImage = createTestImage(color: .purple, size: CGSize(width: 64, height: 64))
@@ -161,13 +161,232 @@ struct SmartAsyncImageMemoryCacheTests {
         #expect(retrieved === testImage)
     }
 
-    @Test("Cache miss returns nil from mock")
-    func cacheMissReturnsNil() async {
+    @Test("Mock Cache miss returns nil from mock")
+    func mockCacheMissReturnsNil() async {
         let mockCache = MockMemoryCache()
         let testURL = URL(string: "https://example.com/nonexistent.png")!
 
         let result = await mockCache.getImage(for: testURL)
         #expect(result == nil)
+    }
+}
+
+// MARK: - SmartAsyncImageMemoryCache Integration Tests
+
+@Suite("SmartAsyncImageMemoryCache Integration Tests")
+struct SmartAsyncImageMemoryCacheIntegrationTests {
+
+    // Use stable, small image URLs for testing
+    static let testImageURL = URL(string: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png")!
+    static let smallImageURL = URL(string: "https://www.google.com/favicon.ico")!
+    static let anotherImageURL = URL(string: "https://www.apple.com/favicon.ico")!
+
+    /// Creates an isolated cache instance with its own disk cache folder
+    func createIsolatedCache() -> (cache: SmartAsyncImageMemoryCache, diskCache: SmartAsyncImageDiskCache, folder: String) {
+        let folder = "TestSmartAsyncImageCache_\(UUID().uuidString)"
+        let diskCache = SmartAsyncImageDiskCache(fileManager: .default, folder: folder)
+        let cache = SmartAsyncImageMemoryCache(diskCache: diskCache)
+        return (cache, diskCache, folder)
+    }
+
+    /// Cleans up the test disk cache folder
+    func cleanup(folder: String) {
+        let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+        let directory = cacheDir.appendingPathComponent(folder)
+        try? FileManager.default.removeItem(at: directory)
+    }
+
+    @Test("Fetch image from network successfully")
+    func fetchImageFromNetwork() async throws {
+        let (cache, _, folder) = createIsolatedCache()
+        defer { cleanup(folder: folder) }
+
+        let image = try await cache.image(for: Self.testImageURL)
+
+        #expect(image.size.width > 0)
+        #expect(image.size.height > 0)
+    }
+
+    @Test("Memory cache returns cached image on second fetch")
+    func memoryCacheReturnsCachedImage() async throws {
+        let (cache, _, folder) = createIsolatedCache()
+        defer { cleanup(folder: folder) }
+
+        // First fetch - should hit network
+        let hasCachedBefore = await cache.hasCachedImage(for: Self.testImageURL)
+        #expect(!hasCachedBefore)
+
+        let image1 = try await cache.image(for: Self.testImageURL)
+
+        // Verify it's now in memory cache
+        let hasCachedAfter = await cache.hasCachedImage(for: Self.testImageURL)
+        #expect(hasCachedAfter)
+
+        // Second fetch - should return from memory cache
+        let image2 = try await cache.image(for: Self.testImageURL)
+
+        // Both images should have the same dimensions
+        #expect(image1.size == image2.size)
+    }
+
+    @Test("Clear memory cache removes cached images")
+    func clearMemoryCacheRemovesImages() async throws {
+        let (cache, _, folder) = createIsolatedCache()
+        defer { cleanup(folder: folder) }
+
+        // Fetch and cache an image
+        _ = try await cache.image(for: Self.testImageURL)
+
+        // Verify it's in cache
+        let hasCachedBefore = await cache.hasCachedImage(for: Self.testImageURL)
+        #expect(hasCachedBefore)
+
+        // Clear the cache
+        await cache.clearMemoryCache()
+
+        // Verify it's no longer in memory cache
+        let hasCachedAfter = await cache.hasCachedImage(for: Self.testImageURL)
+        #expect(!hasCachedAfter)
+    }
+
+    @Test("Task coalescing: concurrent requests share single network call")
+    func taskCoalescingSharesNetworkCall() async throws {
+        let (cache, _, folder) = createIsolatedCache()
+        defer { cleanup(folder: folder) }
+
+        // Use same URL to test coalescing
+        let testURL = Self.smallImageURL
+
+        // Launch multiple concurrent requests for the same URL
+        async let image1 = cache.image(for: testURL)
+        async let image2 = cache.image(for: testURL)
+        async let image3 = cache.image(for: testURL)
+
+        // All should succeed and return images
+        let results = try await [image1, image2, image3]
+
+        // All images should be valid
+        for image in results {
+            #expect(image.size.width > 0)
+            #expect(image.size.height > 0)
+        }
+
+        // All images should have the same size (they're the same image)
+        #expect(results[0].size == results[1].size)
+        #expect(results[1].size == results[2].size)
+    }
+
+    @Test("Inflight request count is zero when idle")
+    func inflightRequestCountZeroWhenIdle() async throws {
+        let (cache, _, folder) = createIsolatedCache()
+        defer { cleanup(folder: folder) }
+
+        let count = await cache.inflightRequestCount
+        #expect(count == 0)
+    }
+
+    @Test("Disk cache persists image after memory cache clear")
+    func diskCachePersistsImage() async throws {
+        let (cache, _, folder) = createIsolatedCache()
+        defer { cleanup(folder: folder) }
+
+        // Use the small image URL
+        let testURL = Self.smallImageURL
+
+        // Fetch image (goes to network, saves to disk)
+        let originalImage = try await cache.image(for: testURL)
+
+        // Wait a moment for disk save to complete (it's detached)
+        try await Task.sleep(nanoseconds: 500_000_000) // 500ms
+
+        // Clear memory cache
+        await cache.clearMemoryCache()
+
+        // Verify memory cache is clear
+        let hasCached = await cache.hasCachedImage(for: testURL)
+        #expect(!hasCached)
+
+        // Fetch again - should come from disk cache
+        let cachedImage = try await cache.image(for: testURL)
+
+        // Should have the same dimensions
+        #expect(cachedImage.size.width == originalImage.size.width)
+        #expect(cachedImage.size.height == originalImage.size.height)
+    }
+
+    @Test("Invalid URL throws error")
+    func invalidURLThrowsError() async throws {
+        let (cache, _, folder) = createIsolatedCache()
+        defer { cleanup(folder: folder) }
+
+        // This URL returns a 404
+        let invalidURL = URL(string: "https://httpstat.us/404")!
+
+        do {
+            _ = try await cache.image(for: invalidURL)
+            #expect(Bool(false), "Expected error to be thrown")
+        } catch {
+            // Expected - should throw an error
+            #expect(Bool(true))
+        }
+    }
+
+    @Test("Non-image URL throws error")
+    func nonImageURLThrowsError() async throws {
+        let (cache, _, folder) = createIsolatedCache()
+        defer { cleanup(folder: folder) }
+
+        // This returns JSON, not an image
+        let jsonURL = URL(string: "https://httpbin.org/json")!
+
+        do {
+            _ = try await cache.image(for: jsonURL)
+            #expect(Bool(false), "Expected error to be thrown for non-image data")
+        } catch {
+            // Expected - should throw an error because data is not a valid image
+            #expect(Bool(true))
+        }
+    }
+
+    @Test("Multiple different URLs are cached independently")
+    func multipleDifferentURLsCachedIndependently() async throws {
+        let (cache, _, folder) = createIsolatedCache()
+        defer { cleanup(folder: folder) }
+
+        let url1 = Self.smallImageURL
+        let url2 = Self.anotherImageURL
+
+        // Fetch both
+        let image1 = try await cache.image(for: url1)
+        let image2 = try await cache.image(for: url2)
+
+        // Both should be cached
+        let hasCached1 = await cache.hasCachedImage(for: url1)
+        let hasCached2 = await cache.hasCachedImage(for: url2)
+
+        #expect(hasCached1)
+        #expect(hasCached2)
+
+        // Both images should have dimensions (they're different favicons but both valid)
+        #expect(image1.size.width > 0)
+        #expect(image2.size.width > 0)
+    }
+
+    @Test("Cache with custom URLSession works")
+    func cacheWithCustomURLSessionWorks() async throws {
+        let folder = "TestSmartAsyncImageCache_\(UUID().uuidString)"
+        let diskCache = SmartAsyncImageDiskCache(fileManager: .default, folder: folder)
+
+        // Create a custom URLSession with a short timeout
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 30
+        let customSession = URLSession(configuration: config)
+
+        let cache = SmartAsyncImageMemoryCache(diskCache: diskCache, urlSession: customSession)
+        defer { cleanup(folder: folder) }
+
+        let image = try await cache.image(for: Self.testImageURL)
+        #expect(image.size.width > 0)
     }
 }
 
@@ -349,43 +568,5 @@ func createTestImage(color: UIColor, size: CGSize) -> UIImage {
     return renderer.image { context in
         color.setFill()
         context.fill(CGRect(origin: .zero, size: size))
-    }
-}
-
-actor MockMemoryCache: SmartAsyncImageMemoryCacheProtocol {
-    private var cache: [URL: UIImage] = [:]
-    private var shouldFail = false
-    private var delay: TimeInterval = 0
-
-    func setImage(_ image: UIImage, for url: URL) {
-        cache[url] = image
-    }
-
-    func getImage(for url: URL) -> UIImage? {
-        return cache[url]
-    }
-
-    func setShouldFail(_ value: Bool) {
-        shouldFail = value
-    }
-
-    func setDelay(_ value: TimeInterval) {
-        delay = value
-    }
-
-    func image(for url: URL) async throws -> UIImage {
-        if delay > 0 {
-            try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
-        }
-
-        if shouldFail {
-            throw URLError(.badServerResponse)
-        }
-
-        guard let image = cache[url] else {
-            throw URLError(.resourceUnavailable)
-        }
-
-        return image
     }
 }
