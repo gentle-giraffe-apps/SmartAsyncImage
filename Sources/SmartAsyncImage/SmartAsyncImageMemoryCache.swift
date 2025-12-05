@@ -15,14 +15,34 @@ public actor SmartAsyncImageMemoryCache: SmartAsyncImageMemoryCacheProtocol {
     private let diskCache: SmartAsyncImageDiskCache
     private let encoder: SmartAsyncImageEncoder
     private var inflightRequests: [URL: Task<UIImage, Error>]
-    
+    private let urlSession: URLSession
+
     public init(
         encoder: SmartAsyncImageEncoder = SmartAsyncImageEncoder(),
-        diskCache: SmartAsyncImageDiskCache = SmartAsyncImageDiskCache()
+        diskCache: SmartAsyncImageDiskCache = SmartAsyncImageDiskCache(),
+        urlSession: URLSession = .shared
     ) {
         self.encoder = encoder
         self.diskCache = diskCache
         self.inflightRequests = [:]
+        self.urlSession = urlSession
+    }
+
+    // MARK: - Test Helpers
+
+    /// Clears the in-memory cache. Useful for test isolation.
+    public func clearMemoryCache() {
+        cache.removeAllObjects()
+    }
+
+    /// Returns the number of currently in-flight requests. Useful for testing task coalescing.
+    public var inflightRequestCount: Int {
+        inflightRequests.count
+    }
+
+    /// Checks if there's a cached image in memory for the given URL.
+    public func hasCachedImage(for url: URL) -> Bool {
+        cache.object(forKey: url as NSURL) != nil
     }
     
     public func image(for url: URL) async throws -> UIImage {
@@ -40,7 +60,7 @@ public actor SmartAsyncImageMemoryCache: SmartAsyncImageMemoryCacheProtocol {
         }
         let task = Task<UIImage, Error> {
             try Task.checkCancellation()
-            let (data, response) = try await URLSession.shared.data(from: url)
+            let (data, response) = try await urlSession.data(from: url)
             try Task.checkCancellation()
             guard let response = response as? HTTPURLResponse else {
                 throw URLError(.badServerResponse)
@@ -62,5 +82,43 @@ public actor SmartAsyncImageMemoryCache: SmartAsyncImageMemoryCacheProtocol {
             self.inflightRequests[url] = nil
         }
         return try await task.value
+    }
+}
+
+actor MockMemoryCache: SmartAsyncImageMemoryCacheProtocol {
+    private var cache: [URL: UIImage] = [:]
+    private var shouldFail = false
+    private var delay: TimeInterval = 0
+
+    func setImage(_ image: UIImage, for url: URL) {
+        cache[url] = image
+    }
+
+    func getImage(for url: URL) -> UIImage? {
+        return cache[url]
+    }
+
+    func setShouldFail(_ value: Bool) {
+        shouldFail = value
+    }
+
+    func setDelay(_ value: TimeInterval) {
+        delay = value
+    }
+
+    func image(for url: URL) async throws -> UIImage {
+        if delay > 0 {
+            try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+        }
+
+        if shouldFail {
+            throw URLError(.badServerResponse)
+        }
+
+        guard let image = cache[url] else {
+            throw URLError(.resourceUnavailable)
+        }
+
+        return image
     }
 }
