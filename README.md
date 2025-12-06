@@ -68,3 +68,26 @@ flowchart TD
     Mem --> Disk["SmartAsyncImage<br/>DiskCache"]
     Disk --> Encoder["SmartAsyncImage<br/>Encoder"]
     Mem --> URLSession[["URLSession"]]
+```
+
+---
+
+## 🤖 Tooling Note
+
+Portions of drafting and editorial refinement in this repository were accelerated using large language models (including ChatGPT, Claude, and Gemini) under direct human design, validation, and final approval. All technical decisions, code, and architectural conclusions are authored and verified by the repository maintainer.
+
+---
+
+## 🔐 License
+
+MIT License
+Free for personal and commercial use.
+
+---
+
+## 👤 Author
+
+Built by **Jonathan Ritchey**
+Gentle Giraffe Apps
+Senior iOS Engineer --- Swift | SwiftUI | Concurrency
+
