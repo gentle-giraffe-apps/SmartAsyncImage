@@ -21,6 +21,29 @@ A smarter, faster `AsyncImage` for SwiftUI with built-in in-memory and disk cach
 - Swift 6.2+
 - Swift Package Manager
 
+## Demo App
+
+A runnable SwiftUI demo app is included in this repository using a local package reference.
+
+**Path:**
+```
+Demo/SmartAsyncImageDemo/SmartAsyncDemo.xcodeproj
+```
+
+### How to Run
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/<your-org>/SmartAsyncImage.git
+   ```
+2. Open the demo project:
+   ```
+   Demo/SmartAsyncImageDemo/SmartAsyncDemo.xcodeproj
+   ```
+3. Select an iOS 17+ simulator.
+4. Build & Run (⌘R).
+
+The project is preconfigured with a local Swift Package reference to `SmartAsyncImage` and should run without any additional setup.
+
 ## Usage
 
 ### Quick Example (SwiftUI)
