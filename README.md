@@ -33,7 +33,7 @@ Demo/SmartAsyncImageDemo/SmartAsyncDemo.xcodeproj
 ### How to Run
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-org>/SmartAsyncImage.git
+   git clone https://github.com/gentle-giraffe-apps/SmartAsyncImage.git
    ```
 2. Open the demo project:
    ```
