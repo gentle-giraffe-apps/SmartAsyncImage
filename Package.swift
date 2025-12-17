@@ -3,6 +3,12 @@
 
 import PackageDescription
 
+let strictSwift6: [SwiftSetting] = [
+    .unsafeFlags(["-strict-concurrency=complete"]),
+    .unsafeFlags(["-warn-concurrency"]),
+    .unsafeFlags(["-enable-actor-data-race-checks"], .when(configuration: .debug))
+]
+
 let package = Package(
     name: "SmartAsyncImage",
     platforms: [
@@ -19,11 +25,14 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "SmartAsyncImage"
+            name: "SmartAsyncImage",
+            swiftSettings: strictSwift6
         ),
         .testTarget(
             name: "SmartAsyncImageTests",
-            dependencies: ["SmartAsyncImage"]
+            dependencies: ["SmartAsyncImage"],
+            swiftSettings: strictSwift6
         ),
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )
