@@ -12,13 +12,13 @@ public enum SmartAsyncImagePhase { case empty, loading, success(Image), failure(
 public final class SmartAsyncImageViewModel {
 
     public var phase: SmartAsyncImagePhase = .empty
-    private let url: URL
+    private let url: URL?
     private let cache: SmartAsyncImageMemoryCacheProtocol
 
     // 1) Hold onto the active task
     private var loadTask: Task<Void, Never>?
 
-    init(url: URL, cache: SmartAsyncImageMemoryCacheProtocol) {
+    init(url: URL?, cache: SmartAsyncImageMemoryCacheProtocol) {
         self.url = url
         self.cache = cache
     }
@@ -30,6 +30,10 @@ public final class SmartAsyncImageViewModel {
 
         // 3) Create a cancelable task and store it
         loadTask = Task { [url, cache] in
+            guard let url else {
+                await MainActor.run { self.phase = .failure(URLError(.badURL)) }
+                return
+            }
             do {
                 let image = try await cache.image(for: url)
                 await MainActor.run { self.phase = .success(Image(uiImage: image)) }
