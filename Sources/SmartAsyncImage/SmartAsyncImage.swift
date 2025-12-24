@@ -7,7 +7,7 @@ public struct SmartAsyncImage<Content: View>: View {
     private let content: (SmartAsyncImagePhase) -> Content
 
     public init(
-        url: URL,
+        url: URL?,
         cache: SmartAsyncImageMemoryCacheProtocol? = nil,
         @ViewBuilder content: @escaping (SmartAsyncImagePhase) -> Content
     ) {
@@ -24,7 +24,7 @@ public struct SmartAsyncImage<Content: View>: View {
 
 extension SmartAsyncImage where Content == Image {
     public init(
-        url: URL,
+        url: URL?,
         cache: SmartAsyncImageMemoryCacheProtocol? = nil,
         placeholder: @escaping () -> Image = { Image(systemName: "photo") }
     ) {
