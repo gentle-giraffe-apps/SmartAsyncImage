@@ -2,7 +2,8 @@
 
 A smarter, faster `AsyncImage` for SwiftUI with built-in in-memory and disk caching, cancellation, and Swift 6 concurrency.
 
-[![Swift](https://img.shields.io/badge/Swift-6.2-orange.svg)](https://swift.org)
+[![CI](https://github.com/gentle-giraffe-apps/SmartAsyncImage/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/gentle-giraffe-apps/SmartAsyncImage/actions/workflows/ci.yml)
+[![Swift](https://img.shields.io/badge/Swift-6.1-orange.svg)](https://swift.org)
 [![SPM Compatible](https://img.shields.io/badge/SPM-Compatible-brightgreen.svg)](https://swift.org/package-manager/)
 [![Platforms](https://img.shields.io/badge/platforms-iOS%2017%2B-blue)](https://developer.apple.com/ios/)
 [![Coverage](https://img.shields.io/badge/coverage-87%25-brightgreen.svg)](#)
