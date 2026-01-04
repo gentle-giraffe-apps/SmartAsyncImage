@@ -26,4 +26,43 @@ platform :ios do
       destination: "generic/platform=iOS Simulator"
     )
   end
+
+
+  desc "Run package unit tests and gather coverage"
+  lane :package_tests do
+    repo_root = File.expand_path("../../..", __dir__)
+
+    Dir.chdir(repo_root) do
+      sh <<~CMD
+        set -euo pipefail
+        rm -rf TestResults.xcresult coverage xccov.json coverage.xml
+        mkdir -p coverage
+
+        xcodebuild test \
+          -scheme SmartAsyncImage \
+          -sdk iphonesimulator \
+          -destination "platform=iOS Simulator,name=iPhone 17" \
+          -enableCodeCoverage YES \
+          -resultBundlePath TestResults.xcresult
+      CMD
+    end
+  end
+
+  desc "Convert coverage"
+  lane :coverage_xml do
+    repo_root = File.expand_path("../../..", __dir__)
+
+    Dir.chdir(repo_root) do
+      sh <<~CMD
+        set -euo pipefail
+        xcresultparser \
+          --output-format cobertura \
+          --project-root "#{repo_root}" \
+          TestResults.xcresult > coverage.xml
+
+        echo "Generated coverage.xml"
+        grep -m 3 'filename="' coverage.xml
+      CMD
+    end
+  end
 end
