@@ -3,10 +3,11 @@
 
 import PackageDescription
 
-let strictSwift6: [SwiftSetting] = [
-    .unsafeFlags(["-strict-concurrency=complete"]),
-    .unsafeFlags(["-warn-concurrency"]),
-    .unsafeFlags(["-enable-actor-data-race-checks"], .when(configuration: .debug))
+let upcomingSwiftSettings: [SwiftSetting] = [
+    .enableUpcomingFeature("StrictConcurrency"),
+    .enableUpcomingFeature("ExistentialAny"),
+    // Optional, only if you use it:
+    // .enableUpcomingFeature("ImplicitOpenExistentials"),
 ]
 
 let package = Package(
@@ -15,24 +16,27 @@ let package = Package(
         .iOS(.v17)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "SmartAsyncImage",
             targets: ["SmartAsyncImage"]
         ),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "SmartAsyncImage",
-            swiftSettings: strictSwift6
+            swiftSettings: upcomingSwiftSettings
         ),
         .testTarget(
             name: "SmartAsyncImageTests",
             dependencies: ["SmartAsyncImage"],
-            swiftSettings: strictSwift6
+            swiftSettings: upcomingSwiftSettings
         ),
-    ],
-    swiftLanguageModes: [.v6]
+    ]
+
+    // Key point:
+    // If you want "upcoming features" (incremental Swift 6 hardening),
+    // do NOT pin full Swift 6 language mode here.
+    // Remove swiftLanguageModes entirely.
+    //
+    // , swiftLanguageModes: [.v6]
 )

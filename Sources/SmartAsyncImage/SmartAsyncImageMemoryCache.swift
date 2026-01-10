@@ -14,7 +14,7 @@ public actor SmartAsyncImageMemoryCache: SmartAsyncImageMemoryCacheProtocol {
     private let cache = NSCache<NSURL, UIImage>() // NSCache is thread safe.
     private let diskCache: SmartAsyncImageDiskCache
     private let encoder: SmartAsyncImageEncoder
-    private var inflightRequests: [URL: Task<UIImage, Error>]
+    private var inflightRequests: [URL: Task<UIImage, any Error>]
     private let urlSession: URLSession
 
     public init(
@@ -58,7 +58,7 @@ public actor SmartAsyncImageMemoryCache: SmartAsyncImageMemoryCacheProtocol {
         if let task = inflightRequests[url] {
             return try await task.value
         }
-        let task = Task<UIImage, Error> {
+        let task = Task<UIImage, any Error> {
             try Task.checkCancellation()
             let (data, response) = try await urlSession.data(from: url)
             try Task.checkCancellation()
