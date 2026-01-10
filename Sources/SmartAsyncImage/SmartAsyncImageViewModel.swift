@@ -5,7 +5,7 @@ import Observation
 import SwiftUI
 import UIKit
 
-public enum SmartAsyncImagePhase { case empty, loading, success(Image), failure(Error) }
+public enum SmartAsyncImagePhase { case empty, loading, success(Image), failure(any Error) }
 
 @MainActor
 @Observable
@@ -13,12 +13,12 @@ public final class SmartAsyncImageViewModel {
 
     public var phase: SmartAsyncImagePhase = .empty
     private let url: URL?
-    private let cache: SmartAsyncImageMemoryCacheProtocol
+    private let cache: any SmartAsyncImageMemoryCacheProtocol
 
     // 1) Hold onto the active task
     private var loadTask: Task<Void, Never>?
 
-    init(url: URL?, cache: SmartAsyncImageMemoryCacheProtocol) {
+    init(url: URL?, cache: any SmartAsyncImageMemoryCacheProtocol) {
         self.url = url
         self.cache = cache
     }
