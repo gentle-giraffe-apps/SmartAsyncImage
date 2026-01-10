@@ -7,7 +7,7 @@ on:
 
 jobs:
   ios-demo-build:
-    runs-on: macos-15
+    runs-on: macos-26
 
     defaults:
       run:
@@ -23,9 +23,6 @@ jobs:
           ruby-version: "3.3"
           bundler-cache: true
           working-directory: Demo/SmartAsyncImageDemo
-
-      - name: Build (Fastlane)
-        run: bundle exec fastlane ios build
 
       - name: Install xcresultparser
         run: brew install xcresultparser
