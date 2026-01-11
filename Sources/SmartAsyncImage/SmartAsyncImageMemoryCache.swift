@@ -28,8 +28,6 @@ public actor SmartAsyncImageMemoryCache: SmartAsyncImageMemoryCacheProtocol {
         self.urlSession = urlSession
     }
 
-    // MARK: - Test Helpers
-
     /// Clears the in-memory cache. Useful for test isolation.
     public func clearMemoryCache() {
         cache.removeAllObjects()
@@ -84,6 +82,8 @@ public actor SmartAsyncImageMemoryCache: SmartAsyncImageMemoryCacheProtocol {
         return try await task.value
     }
 }
+
+// MARK: - Test Helpers
 
 actor MockMemoryCache: SmartAsyncImageMemoryCacheProtocol {
     private var cache: [URL: UIImage] = [:]
