@@ -89,7 +89,7 @@ flowchart TD
     VM --> Phase["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage__<br/>Phase</div>"]
     VM --> MemProto["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImageMemory<br/>CacheProtocol</div>"]
     MemProto --> Mem["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage__<br/>MemoryCache<br/>(actor)</div>"]
-    Mem --> Disk["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage_<br/>DiskCache</div>"]
+    Mem --> Disk["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage__<br/>DiskCache</div>"]
     Disk --> Encoder["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage__<br/>Encoder</div>"]
     Mem --> URLSession[["<div style='padding:12px 12px; white-space:nowrap;'>URLSession·</div>"]]
 ```
