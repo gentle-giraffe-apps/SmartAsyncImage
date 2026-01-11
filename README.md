@@ -85,12 +85,12 @@ struct MinimalRemoteImageView: View {
 
 ```mermaid
 flowchart TD
-    SAI["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage_<br/>(SwiftUI View)</div>"] --> VM["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage_<br/>ViewModel</div>"]
-    VM --> Phase["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage_<br/>Phase</div>"]
+    SAI["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage__<br/>(SwiftUI View)</div>"] --> VM["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage__<br/>ViewModel</div>"]
+    VM --> Phase["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage__<br/>Phase</div>"]
     VM --> MemProto["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImageMemory<br/>CacheProtocol</div>"]
-    MemProto --> Mem["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage_<br/>MemoryCache<br/>(actor)</div>"]
+    MemProto --> Mem["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage__<br/>MemoryCache<br/>(actor)</div>"]
     Mem --> Disk["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage_<br/>DiskCache</div>"]
-    Disk --> Encoder["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage_<br/>Encoder</div>"]
+    Disk --> Encoder["<div style='padding:12px 12px; white-space:nowrap;'>SmartAsyncImage__<br/>Encoder</div>"]
     Mem --> URLSession[["<div style='padding:12px 12px; white-space:nowrap;'>URLSession·</div>"]]
 ```
 
