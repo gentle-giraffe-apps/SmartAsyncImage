@@ -85,13 +85,44 @@ struct MinimalRemoteImageView: View {
 
 ```mermaid
 flowchart TD
-    SAI["<div style='padding:6px 12px; white-space:nowrap;'>SmartAsyncImage<br/>(SwiftUI View)</div>"] --> VM["<div style='padding:6px 12px; white-space:nowrap;'>SmartAsyncImage<br/>ViewModel</div>"]
-    VM --> Phase["<div style='padding:6px 12px; white-space:nowrap;'>SmartAsyncImage<br/>Phase</div>"]
-    VM --> MemProto["<div style='padding:6px 12px; white-space:nowrap;'>SmartAsyncImageMemory<br/>CacheProtocol</div>"]
-    MemProto --> Mem["<div style='padding:6px 12px; white-space:nowrap;'>SmartAsyncImage<br/>MemoryCache<br/>(actor)</div>"]
-    Mem --> Disk["<div style='padding:6px 12px; white-space:nowrap;'>SmartAsyncImage<br/>DiskCache</div>"]
-    Disk --> Encoder["<div style='padding:6px 12px; white-space:nowrap;'>SmartAsyncImage<br/>Encoder</div>"]
-    Mem --> URLSession[["<div style='padding:6px 12px; white-space:nowrap;'>URLSession</div>"]]
+    classDef box fill:#1c1c1e,stroke:#b0b0b0,stroke-width:1px,color:#f5f5f7;
+
+    SAI["<div style='padding:10px 18px; line-height:1.4; white-space:nowrap;'>
+    SmartAsyncImage&nbsp;&nbsp;<br/>
+    (SwiftUI&nbsp;View)&nbsp;&nbsp;
+    </div>"]:::box --> VM["<div style='padding:10px 18px; line-height:1.4; white-space:nowrap;'>
+    SmartAsyncImage&nbsp;&nbsp;<br/>
+    ViewModel&nbsp;&nbsp;
+    </div>"]:::box
+
+    VM --> Phase["<div style='padding:10px 18px; line-height:1.4; white-space:nowrap;'>
+    SmartAsyncImage&nbsp;&nbsp;<br/>
+    Phase&nbsp;&nbsp;
+    </div>"]:::box
+
+    VM --> MemProto["<div style='padding:10px 18px; line-height:1.4; white-space:nowrap;'>
+    SmartAsyncImageMemory&nbsp;&nbsp;<br/>
+    CacheProtocol&nbsp;&nbsp;
+    </div>"]:::box
+
+    MemProto --> Mem["<div style='padding:10px 18px; line-height:1.4; white-space:nowrap;'>
+    SmartAsyncImage&nbsp;&nbsp;<br/>
+    MemoryCache&nbsp;(actor)&nbsp;&nbsp;
+    </div>"]:::box
+
+    Mem --> Disk["<div style='padding:10px 18px; line-height:1.4; white-space:nowrap;'>
+    SmartAsyncImage&nbsp;&nbsp;<br/>
+    DiskCache&nbsp;&nbsp;
+    </div>"]:::box
+
+    Disk --> Encoder["<div style='padding:10px 18px; line-height:1.4; white-space:nowrap;'>
+    SmartAsyncImage&nbsp;&nbsp;<br/>
+    Encoder&nbsp;&nbsp;
+    </div>"]:::box
+
+    Mem --> URLSession[["<div style='padding:10px 18px; line-height:1.4; white-space:nowrap;'>
+    URLSession&nbsp;&nbsp;
+    </div>"]]:::box
 ```
 
 ---
