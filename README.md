@@ -22,6 +22,16 @@ A smarter, faster `AsyncImage` for SwiftUI with built-in in-memory and disk cach
 - Swift 6.2+
 - Swift Package Manager
 
+## 📦 Installation (Swift Package Manager)
+
+### Via Xcode
+
+1. Open your project in Xcode
+2. Go to **File → Add Packages...**
+3. Enter the repository URL: `https://github.com/gentle-giraffe-apps/SmartAsyncImage.git`
+4. Choose a version rule (or `main` while developing)
+5. Add the **SmartAsyncImage** product to your app target
+
 ## Demo App
 
 A runnable SwiftUI demo app is included in this repository using a local package reference.
