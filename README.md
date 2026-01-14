@@ -9,6 +9,8 @@ A smarter, faster `AsyncImage` for SwiftUI with built-in in-memory and disk cach
 [![Platforms](https://img.shields.io/badge/platforms-iOS%2017%2B-blue)](https://developer.apple.com/ios/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
+💬 **[Join the discussion. Feedback and questions welcome](https://github.com/gentle-giraffe-apps/SmartAsyncImage/discussions)**
+
 ## Features
 - SwiftUI-friendly API with an observable view model
 - Smart phase handling: `empty`, `loading`, `success(Image)`, `failure(Error)`
