@@ -1,0 +1,15 @@
+# MODULE.bazel
+# SmartAsyncImage — Bazel module manifest (Bzlmod)
+
+module(
+    name = "smart_async_image",
+    version = "0.1.0",  # matches tagged version
+    compatibility_level = 1,
+)
+
+# --- Core Bazel rule sets you'll need for Swift + Apple app builds ---
+bazel_dep(name = "rules_swift", version = "3.4.2")  # swift_library, swift_test, etc. :contentReference[oaicite:1]{index=1}
+bazel_dep(name = "rules_apple", version = "4.3.3")  # ios_application bundling + resources :contentReference[oaicite:2]{index=2}
+
+# --- Optional (recommended if you want Bazel-generated Xcode projects) ---
+bazel_dep(name = "rules_xcodeproj", version = "3.5.1")  # xcodeproj generation :contentReference[oaicite:3]{index=3}

@@ -1,0 +1,32 @@
+load("@rules_swift//swift:swift.bzl", "swift_library")
+load("@rules_apple//apple:ios.bzl", "ios_application")
+load("@rules_apple//apple:resources.bzl", "apple_resource_group")
+
+swift_library(
+    name = "SmartAsyncImageDemoLib",
+    srcs = glob(["SmartAsyncImageDemo/*.swift"]),
+    deps = [
+        "//Sources/SmartAsyncImage:SmartAsyncImage",
+    ],
+)
+
+apple_resource_group(
+    name = "DemoResources",
+    resources = [
+        "SmartAsyncImageDemo/Assets.xcassets",
+    ],
+)
+
+ios_application(
+    name = "SmartAsyncImageDemo",
+    bundle_id = "com.jr.SmartAsyncImageDemo",
+    families = ["iphone", "ipad"],
+    minimum_os_version = "17.0",
+    infoplists = ["SmartAsyncImageDemo/Info.plist"],
+    deps = [
+        ":SmartAsyncImageDemoLib",
+    ],
+    resources = [
+        ":DemoResources",
+    ],
+)
