@@ -25,9 +25,22 @@
 		88354F4B2EE762BE00624775 /* SmartAsyncImageDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartAsyncImageDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		88D4A2AC2F1A836A00765998 /* Exceptions for "SmartAsyncImageDemo" folder in "SmartAsyncImageDemo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 88354F3D2EE762BE00624775 /* SmartAsyncImageDemo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		88354F402EE762BE00624775 /* SmartAsyncImageDemo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				88D4A2AC2F1A836A00765998 /* Exceptions for "SmartAsyncImageDemo" folder in "SmartAsyncImageDemo" target */,
+			);
 			path = SmartAsyncImageDemo;
 			sourceTree = "<group>";
 		};
