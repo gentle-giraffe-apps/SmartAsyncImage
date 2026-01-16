@@ -17,6 +17,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # ---- Bazel (run from repo root, so override working-directory per-step) ----
+      - name: Setup Bazelisk
+        uses: bazelbuild/setup-bazelisk@v3
+
+      - name: Cache Bazel
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/bazel
+            ~/.cache/bazelisk
+          key: ${{ runner.os }}-bazel-${{ hashFiles('.bazelversion', 'MODULE.bazel', 'MODULE.bazel.lock', '**/*.bzl', '**/BUILD.bazel', '.bazelrc') }}
+          restore-keys: |
+            ${{ runner.os }}-bazel-
+
+      - name: Bazel build (Demo)
+        working-directory: ${{ github.workspace }}
+        run: bazel build //Demo/SmartAsyncImageDemo:SmartAsyncImageDemo
+
+      # ---- Your existing Fastlane + Codecov pipeline ----
       - name: Set up Ruby (Bundler)
         uses: ruby/setup-ruby@v1
         with:
@@ -43,4 +62,3 @@ jobs:
           files: ${{ github.workspace }}/coverage.xml
           root_dir: ${{ github.workspace }}
           verbose: true
-          
