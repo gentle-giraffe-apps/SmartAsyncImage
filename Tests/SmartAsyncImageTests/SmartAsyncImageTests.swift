@@ -289,8 +289,7 @@ struct SmartAsyncImageMemoryCacheIntegrationTests {
         defer { cleanup(folder: folder) }
 
         let inflightRequestCount = await cache.inflightRequestCount
-        // avoid false positive on static analysis for count==0 recommending isEmpty
-        #expect(inflightRequestCount < 1)
+        #expect(inflightRequestCount == 0)
     }
 
     @Test("Disk cache persists image after memory cache clear")
