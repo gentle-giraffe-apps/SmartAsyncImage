@@ -177,9 +177,16 @@ struct SmartAsyncImageMemoryCacheMockTests {
 struct SmartAsyncImageMemoryCacheIntegrationTests {
 
     // Use stable, small image URLs for testing
-    static let testImageURL = URL(string: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png")!
-    static let smallImageURL = URL(string: "https://www.google.com/favicon.ico")!
-    static let anotherImageURL = URL(string: "https://www.apple.com/favicon.ico")!
+    // Using computed properties with fallbacks to avoid force unwraps
+    static var testImageURL: URL {
+        URL(string: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png") ?? URL(filePath: "/")
+    }
+    static var smallImageURL: URL {
+        URL(string: "https://www.google.com/favicon.ico") ?? URL(filePath: "/")
+    }
+    static var anotherImageURL: URL {
+        URL(string: "https://www.apple.com/favicon.ico") ?? URL(filePath: "/")
+    }
 
     /// Creates an isolated cache instance with its own disk cache folder
     func createIsolatedCache() -> (cache: SmartAsyncImageMemoryCache, diskCache: SmartAsyncImageDiskCache, folder: String) {
