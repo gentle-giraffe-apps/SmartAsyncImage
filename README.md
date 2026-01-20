@@ -11,12 +11,8 @@ A smarter, faster `AsyncImage` for SwiftUI with built-in in-memory and disk cach
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 🔍 **DeepSource Static Analysis (per commit)**  
-[![DeepSource](https://deepsource.io/gh/gentle-giraffe-apps/SmartAsyncImage.svg)](
-https://deepsource.io/gh/gentle-giraffe-apps/SmartAsyncImage/?ref=badge
-)
-[![DeepSource Resolved Issues](https://deepsource.io/gh/gentle-giraffe-apps/SmartAsyncImage.svg?label=resolved+issues)](
-https://deepsource.io/gh/gentle-giraffe-apps/SmartAsyncImage/?ref=badge
-)
+[![DeepSource](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage.svg/?label=active+issues&show_trend=true&token=8AlKECHJsLKB-LKEQF5HAISf)](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage/)
+[![DeepSource](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage.svg/?label=resolved+issues&show_trend=true&token=8AlKECHJsLKB-LKEQF5HAISf)](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage/)
 
 💬 **[Join the discussion. Feedback and questions welcome](https://github.com/gentle-giraffe-apps/SmartAsyncImage/discussions)**
 
