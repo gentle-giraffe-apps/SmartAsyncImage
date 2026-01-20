@@ -13,8 +13,8 @@ struct SmartAsyncImageEncoderTests {
     let encoder = SmartAsyncImageEncoder()
 
     @Test("Encode URL to safe filename string")
-    func encodeURLToSafeString() {
-        let url = URL(string: "https://example.com/image.png")!
+    func encodeURLToSafeString() throws {
+        let url = try #require(URL(string: "https://example.com/image.png"))
         let encoded = encoder.encode(url)
 
         #expect(!encoded.contains("/"))
@@ -23,8 +23,8 @@ struct SmartAsyncImageEncoderTests {
     }
 
     @Test("Decode encoded string back to URL")
-    func decodeStringToURL() {
-        let originalURL = URL(string: "https://example.com/image.png")!
+    func decodeStringToURL() throws {
+        let originalURL = try #require(URL(string: "https://example.com/image.png"))
         let encoded = encoder.encode(originalURL)
         let decoded = encoder.decode(encoded)
 
@@ -32,8 +32,8 @@ struct SmartAsyncImageEncoderTests {
     }
 
     @Test("Encode and decode URL with query parameters")
-    func encodeDecodeWithQueryParams() {
-        let url = URL(string: "https://example.com/image.png?size=large&format=webp")!
+    func encodeDecodeWithQueryParams() throws {
+        let url = try #require(URL(string: "https://example.com/image.png?size=large&format=webp"))
         let encoded = encoder.encode(url)
         let decoded = encoder.decode(encoded)
 
@@ -41,8 +41,8 @@ struct SmartAsyncImageEncoderTests {
     }
 
     @Test("Encode and decode URL with special characters")
-    func encodeDecodeWithSpecialChars() {
-        let url = URL(string: "https://example.com/path/to/image%20file.png")!
+    func encodeDecodeWithSpecialChars() throws {
+        let url = try #require(URL(string: "https://example.com/path/to/image%20file.png"))
         let encoded = encoder.encode(url)
         let decoded = encoder.decode(encoded)
 
@@ -80,7 +80,7 @@ struct SmartAsyncImageDiskCacheTests {
         let diskCache = SmartAsyncImageDiskCache(fileManager: fileManager, folder: testFolder)
 
         let testImage = createTestImage(color: .red, size: CGSize(width: 100, height: 100))
-        let testURL = URL(string: "https://example.com/test-image.png")!
+        let testURL = try #require(URL(string: "https://example.com/test-image.png"))
 
         try await diskCache.save(testImage, key: testURL)
         let loadedImage = try await diskCache.load(key: testURL)
@@ -104,7 +104,7 @@ struct SmartAsyncImageDiskCacheTests {
         let testFolder = "TestSmartAsyncImageCache_\(UUID().uuidString)"
         let diskCache = SmartAsyncImageDiskCache(fileManager: fileManager, folder: testFolder)
 
-        let testURL = URL(string: "https://example.com/non-existent.png")!
+        let testURL = try #require(URL(string: "https://example.com/non-existent.png"))
         let loadedImage = try await diskCache.load(key: testURL)
 
         #expect(loadedImage == nil)
@@ -122,8 +122,8 @@ struct SmartAsyncImageDiskCacheTests {
         let image1 = createTestImage(color: .red, size: CGSize(width: 50, height: 50))
         let image2 = createTestImage(color: .blue, size: CGSize(width: 100, height: 100))
 
-        let url1 = URL(string: "https://example.com/image1.png")!
-        let url2 = URL(string: "https://example.com/image2.png")!
+        let url1 = try #require(URL(string: "https://example.com/image1.png"))
+        let url2 = try #require(URL(string: "https://example.com/image2.png"))
 
         try await diskCache.save(image1, key: url1)
         try await diskCache.save(image2, key: url2)
@@ -152,7 +152,7 @@ struct SmartAsyncImageMemoryCacheMockTests {
     @Test("Mock Cache returns same image for same URL")
     func mockCacheReturnsSameImage() async throws {
         let mockCache = MockMemoryCache()
-        let testURL = URL(string: "https://example.com/test.png")!
+        let testURL = try #require(URL(string: "https://example.com/test.png"))
         let testImage = createTestImage(color: .purple, size: CGSize(width: 64, height: 64))
 
         await mockCache.setImage(testImage, for: testURL)
@@ -162,9 +162,9 @@ struct SmartAsyncImageMemoryCacheMockTests {
     }
 
     @Test("Mock Cache miss returns nil from mock")
-    func mockCacheMissReturnsNil() async {
+    func mockCacheMissReturnsNil() async throws {
         let mockCache = MockMemoryCache()
-        let testURL = URL(string: "https://example.com/nonexistent.png")!
+        let testURL = try #require(URL(string: "https://example.com/nonexistent.png"))
 
         let result = await mockCache.getImage(for: testURL)
         #expect(result == nil)
@@ -320,7 +320,7 @@ struct SmartAsyncImageMemoryCacheIntegrationTests {
         defer { cleanup(folder: folder) }
 
         // This URL returns a 404
-        let invalidURL = URL(string: "https://httpstat.us/404")!
+        let invalidURL = try #require(URL(string: "https://httpstat.us/404"))
 
         do {
             _ = try await cache.image(for: invalidURL)
@@ -337,7 +337,7 @@ struct SmartAsyncImageMemoryCacheIntegrationTests {
         defer { cleanup(folder: folder) }
 
         // This returns JSON, not an image
-        let jsonURL = URL(string: "https://httpbin.org/json")!
+        let jsonURL = try #require(URL(string: "https://httpbin.org/json"))
 
         do {
             _ = try await cache.image(for: jsonURL)
@@ -398,8 +398,8 @@ struct SmartAsyncImageMemoryCacheIntegrationTests {
 struct SmartAsyncImageViewModelTests {
 
     @Test("Initial phase is empty")
-    func initialPhaseIsEmpty() {
-        let url = URL(string: "https://example.com/image.png")!
+    func initialPhaseIsEmpty() throws {
+        let url = try #require(URL(string: "https://example.com/image.png"))
         let mockCache = MockMemoryCache()
         let viewModel = SmartAsyncImageViewModel(url: url, cache: mockCache)
 
@@ -411,8 +411,8 @@ struct SmartAsyncImageViewModelTests {
     }
 
     @Test("Load transitions to loading phase")
-    func loadTransitionsToLoading() async {
-        let url = URL(string: "https://example.com/image.png")!
+    func loadTransitionsToLoading() async throws {
+        let url = try #require(URL(string: "https://example.com/image.png"))
         let mockCache = MockMemoryCache()
         await mockCache.setDelay(1.0) // Add delay to catch loading state
 
@@ -433,7 +433,7 @@ struct SmartAsyncImageViewModelTests {
 
     @Test("Load succeeds with cached image")
     func loadSucceedsWithCachedImage() async throws {
-        let url = URL(string: "https://example.com/image.png")!
+        let url = try #require(URL(string: "https://example.com/image.png"))
         let mockCache = MockMemoryCache()
         let testImage = createTestImage(color: .cyan, size: CGSize(width: 32, height: 32))
         await mockCache.setImage(testImage, for: url)
@@ -453,7 +453,7 @@ struct SmartAsyncImageViewModelTests {
 
     @Test("Load fails with error")
     func loadFailsWithError() async throws {
-        let url = URL(string: "https://example.com/image.png")!
+        let url = try #require(URL(string: "https://example.com/image.png"))
         let mockCache = MockMemoryCache()
         await mockCache.setShouldFail(true)
 
@@ -472,7 +472,7 @@ struct SmartAsyncImageViewModelTests {
 
     @Test("Cancel resets phase to empty")
     func cancelResetsPhaseToEmpty() async throws {
-        let url = URL(string: "https://example.com/image.png")!
+        let url = try #require(URL(string: "https://example.com/image.png"))
         let mockCache = MockMemoryCache()
         await mockCache.setDelay(5.0) // Long delay
 
@@ -492,7 +492,7 @@ struct SmartAsyncImageViewModelTests {
 
     @Test("Multiple loads are ignored if not empty")
     func multipleLoadsIgnored() async throws {
-        let url = URL(string: "https://example.com/image.png")!
+        let url = try #require(URL(string: "https://example.com/image.png"))
         let mockCache = MockMemoryCache()
         await mockCache.setDelay(0.5)
 
