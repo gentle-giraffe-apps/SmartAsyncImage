@@ -10,19 +10,8 @@
 		88354F6A2EE7630300624775 /* SmartAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 88354F692EE7630300624775 /* SmartAsyncImage */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		88354F4C2EE762BE00624775 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88354F362EE762BE00624775 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 88354F3D2EE762BE00624775;
-			remoteInfo = SmartAsyncImageDemo;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		88354F3E2EE762BE00624775 /* SmartAsyncImageDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartAsyncImageDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		88354F4B2EE762BE00624775 /* SmartAsyncImageDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartAsyncImageDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -44,16 +33,6 @@
 			path = SmartAsyncImageDemo;
 			sourceTree = "<group>";
 		};
-		88354F4E2EE762BE00624775 /* SmartAsyncImageDemoTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SmartAsyncImageDemoTests;
-			sourceTree = "<group>";
-		};
-		88354F582EE762BE00624775 /* SmartAsyncImageDemoUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SmartAsyncImageDemoUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,13 +44,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		88354F482EE762BE00624775 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -79,8 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				88354F402EE762BE00624775 /* SmartAsyncImageDemo */,
-				88354F4E2EE762BE00624775 /* SmartAsyncImageDemoTests */,
-				88354F582EE762BE00624775 /* SmartAsyncImageDemoUITests */,
 				88354F3F2EE762BE00624775 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -89,7 +59,6 @@
 			isa = PBXGroup;
 			children = (
 				88354F3E2EE762BE00624775 /* SmartAsyncImageDemo.app */,
-				88354F4B2EE762BE00624775 /* SmartAsyncImageDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,29 +89,6 @@
 			productReference = 88354F3E2EE762BE00624775 /* SmartAsyncImageDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		88354F4A2EE762BE00624775 /* SmartAsyncImageDemoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 88354F622EE762BE00624775 /* Build configuration list for PBXNativeTarget "SmartAsyncImageDemoTests" */;
-			buildPhases = (
-				88354F472EE762BE00624775 /* Sources */,
-				88354F482EE762BE00624775 /* Frameworks */,
-				88354F492EE762BE00624775 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				88354F4D2EE762BE00624775 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				88354F4E2EE762BE00624775 /* SmartAsyncImageDemoTests */,
-			);
-			name = SmartAsyncImageDemoTests;
-			packageProductDependencies = (
-			);
-			productName = SmartAsyncImageDemoTests;
-			productReference = 88354F4B2EE762BE00624775 /* SmartAsyncImageDemoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -155,10 +101,6 @@
 				TargetAttributes = {
 					88354F3D2EE762BE00624775 = {
 						CreatedOnToolsVersion = 26.1;
-					};
-					88354F4A2EE762BE00624775 = {
-						CreatedOnToolsVersion = 26.1;
-						TestTargetID = 88354F3D2EE762BE00624775;
 					};
 				};
 			};
@@ -180,20 +122,12 @@
 			projectRoot = "";
 			targets = (
 				88354F3D2EE762BE00624775 /* SmartAsyncImageDemo */,
-				88354F4A2EE762BE00624775 /* SmartAsyncImageDemoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		88354F3C2EE762BE00624775 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88354F492EE762BE00624775 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -210,22 +144,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		88354F472EE762BE00624775 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		88354F4D2EE762BE00624775 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 88354F3D2EE762BE00624775 /* SmartAsyncImageDemo */;
-			targetProxy = 88354F4C2EE762BE00624775 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		88354F5D2EE762BE00624775 /* Debug */ = {
@@ -419,50 +338,6 @@
 			};
 			name = Release;
 		};
-		88354F632EE762BE00624775 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HGE6ZKLW3Q;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jr.SmartAsyncImageDemoTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartAsyncImageDemo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SmartAsyncImageDemo";
-			};
-			name = Debug;
-		};
-		88354F642EE762BE00624775 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HGE6ZKLW3Q;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jr.SmartAsyncImageDemoTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartAsyncImageDemo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SmartAsyncImageDemo";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -480,15 +355,6 @@
 			buildConfigurations = (
 				88354F602EE762BE00624775 /* Debug */,
 				88354F612EE762BE00624775 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		88354F622EE762BE00624775 /* Build configuration list for PBXNativeTarget "SmartAsyncImageDemoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				88354F632EE762BE00624775 /* Debug */,
-				88354F642EE762BE00624775 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
