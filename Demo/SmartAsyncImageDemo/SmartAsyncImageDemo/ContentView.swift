@@ -3,6 +3,11 @@
 import SmartAsyncImage
 import SwiftUI
 
+/// Helper to safely create picsum.photos URLs without force unwrapping
+private func picsumURL(id: Int, width: Int, height: Int) -> URL {
+    URL(string: "https://picsum.photos/id/\(id)/\(width)/\(height)") ?? URL(filePath: "/")
+}
+
 struct ContentView: View {
     private let sampleImages = [
         (id: 10, title: "Forest"),
@@ -19,7 +24,7 @@ struct ContentView: View {
                 VStack(spacing: 24) {
                     // Simple usage with default placeholder
                     Section {
-                        SmartAsyncImage(url: URL(string: "https://picsum.photos/id/1/400/300")!)
+                        SmartAsyncImage(url: picsumURL(id: 1, width: 400, height: 300))
                             .aspectRatio(4/3, contentMode: .fit)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                     } header: {
@@ -28,7 +33,7 @@ struct ContentView: View {
 
                     // Custom content with phase handling
                     Section {
-                        SmartAsyncImage(url: URL(string: "https://picsum.photos/id/15/400/300")!) { phase in
+                        SmartAsyncImage(url: picsumURL(id: 15, width: 400, height: 300)) { phase in
                             switch phase {
                             case .empty, .loading:
                                 ProgressView()
@@ -58,7 +63,7 @@ struct ContentView: View {
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                             ForEach(sampleImages, id: \.id) { item in
                                 VStack {
-                                    SmartAsyncImage(url: URL(string: "https://picsum.photos/id/\(item.id)/200/200")!)
+                                    SmartAsyncImage(url: picsumURL(id: item.id, width: 200, height: 200))
                                         .aspectRatio(1, contentMode: .fit)
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
                                     Text(item.title)
