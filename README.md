@@ -3,16 +3,25 @@
 A smarter, faster `AsyncImage` for SwiftUI with built-in in-memory and disk caching, cancellation, and Swift 6 concurrency.
 
 [![CI](https://github.com/gentle-giraffe-apps/SmartAsyncImage/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/gentle-giraffe-apps/SmartAsyncImage/actions/workflows/ci.yml)
-[![Coverage](https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage/branch/main/graph/badge.svg)](https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage)
 [![Swift](https://img.shields.io/badge/Swift-6.1-orange.svg)](https://swift.org)
 ![Bazel](https://img.shields.io/badge/Bazel-enabled-555?logo=bazel)
 [![SPM Compatible](https://img.shields.io/badge/SPM-Compatible-brightgreen.svg)](https://swift.org/package-manager/)
 [![Platforms](https://img.shields.io/badge/platforms-iOS%2017%2B-blue)](https://developer.apple.com/ios/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-🔍 **DeepSource Static Analysis (per commit)**  
+[![Coverage](https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage/branch/main/graph/badge.svg)](https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage)
+[![DeepSource Static Analysis](https://img.shields.io/badge/DeepSource-Static%20Analysis-0A2540?logo=deepsource&logoColor=white)](https://deepsource.io/)
 [![DeepSource](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage.svg/?label=active+issues&show_trend=true&token=8AlKECHJsLKB-LKEQF5HAISf)](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage/)
 [![DeepSource](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage.svg/?label=resolved+issues&show_trend=true&token=8AlKECHJsLKB-LKEQF5HAISf)](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage/)
+
+<sub><strong>Codecov Snapshot</strong></sub><br/>
+<a href="https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage">
+  <img
+    src="https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage/graphs/tree.svg"
+    height="80"
+    alt="Code coverage snapshot by file and module (Codecov tree graph)"
+  />
+</a>
 
 💬 **[Join the discussion. Feedback and questions welcome](https://github.com/gentle-giraffe-apps/SmartAsyncImage/discussions)**
 
