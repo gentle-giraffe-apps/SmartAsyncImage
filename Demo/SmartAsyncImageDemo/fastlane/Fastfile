@@ -15,20 +15,39 @@
 
 default_platform(:ios)
 
+# Shared derived data folder for faster incremental builds
+DERIVED_DATA_PATH = File.expand_path("../../../.build/DerivedData", __dir__)
+
 platform :ios do
-  desc "Build package and demo app"
+  desc "Build package and demo app (including tests with coverage)"
   lane :build do
+    # Build package tests first with coverage instrumentation
+    # This way the demo app build can reuse the compiled package
+    repo_root = File.expand_path("../../..", __dir__)
+    Dir.chdir(repo_root) do
+      sh <<~CMD
+        xcodebuild build-for-testing \
+          -scheme SmartAsyncImage \
+          -sdk iphonesimulator \
+          -destination "generic/platform=iOS Simulator" \
+          -derivedDataPath #{DERIVED_DATA_PATH} \
+          -enableCodeCoverage YES
+      CMD
+    end
+
+    # Build demo app (should reuse compiled package from above)
     build_app(
       project: "SmartAsyncImageDemo.xcodeproj",
       scheme: "SmartAsyncImageDemo",
       configuration: "Debug",
-      skip_package_ipa: true,   # important: avoids IPA packaging
-      destination: "generic/platform=iOS Simulator"
+      skip_package_ipa: true,
+      destination: "generic/platform=iOS Simulator",
+      derived_data_path: DERIVED_DATA_PATH
     )
   end
 
 
-  desc "Run package unit tests and gather coverage"
+  desc "Run package unit tests (no recompilation)"
   lane :package_tests do
     repo_root = File.expand_path("../../..", __dir__)
 
@@ -38,10 +57,11 @@ platform :ios do
         rm -rf TestResults.xcresult coverage xccov.json coverage.xml
         mkdir -p coverage
 
-        xcodebuild test \
+        xcodebuild test-without-building \
           -scheme SmartAsyncImage \
           -sdk iphonesimulator \
           -destination "platform=iOS Simulator,name=iPhone 17" \
+          -derivedDataPath #{DERIVED_DATA_PATH} \
           -enableCodeCoverage YES \
           -resultBundlePath TestResults.xcresult
       CMD
