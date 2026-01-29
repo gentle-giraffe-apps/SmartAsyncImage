@@ -19,7 +19,7 @@ A smarter, faster `AsyncImage` for SwiftUI with built-in in-memory and disk cach
 <sub><strong>Codecov Snapshot</strong></sub><br/>
 <a href="https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage">
   <img
-    src="https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage/graphs/tree.svg"
+    src="https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage/graphs/icicle.svg"
     height="80"
     alt="Code coverage snapshot by file and module (Codecov tree graph)"
   />
