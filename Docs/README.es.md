@@ -1,6 +1,6 @@
 # SmartAsyncImage
 
-Un `AsyncImage` para SwiftUI (iOS) mas inteligente y rapido, con cache en memoria y en disco, cancelacion y concurrencia de Swift 6.
+Un `AsyncImage` para SwiftUI (iOS) más inteligente y rápido, con caché en memoria y en disco, cancelación y concurrencia de Swift 6.
 
 [![CI](https://github.com/gentle-giraffe-apps/SmartAsyncImage/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/gentle-giraffe-apps/SmartAsyncImage/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage/branch/main/graph/badge.svg)](https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage)
@@ -12,34 +12,34 @@ Un `AsyncImage` para SwiftUI (iOS) mas inteligente y rapido, con cache en memori
 ![Last commit](https://img.shields.io/github/last-commit/gentle-giraffe-apps/SmartAsyncImage)
 [![DeepSource](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage.svg/?label=active+issues&show_trend=true)](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage/)
 
-> **Idioma** · [English](../README.md) · Español · [Português (Brasil)](README.pt-BR.md) · [日本語](README.ja.md)
+> 🌍 **Idioma** · [English](../README.md) · Español · [Português (Brasil)](README.pt-BR.md) · [日本語](README.ja.md) · [简体中文](README.zh-CN.md) · [한국어](README.ko.md) · [Русский](README.ru.md)
 
-## Caracteristicas
+## Características
 - API compatible con SwiftUI con un view model observable
 - Manejo inteligente de fases: `empty`, `loading`, `success(Image)`, `failure(Error)`
-- Protocolo de cache en memoria con implementaciones intercambiables
-- Cache en disco para persistencia entre ejecuciones
-- Concurrencia de Swift (`async/await`) con cancelacion cooperativa
+- Protocolo de caché en memoria con implementaciones intercambiables
+- Caché en disco para persistencia entre ejecuciones
+- Concurrencia de Swift (`async/await`) con cancelación cooperativa
 - Actualizaciones de estado seguras en MainActor
 
-💬 **[Participa en la discusion. Comentarios y preguntas son bienvenidos](https://github.com/gentle-giraffe-apps/SmartAsyncImage/discussions)**
+💬 **[Participa en la discusión. Comentarios y preguntas son bienvenidos](https://github.com/gentle-giraffe-apps/SmartAsyncImage/discussions)**
 
 ## Requisitos
 - iOS 17+
 - Swift 6.1+
 - Swift Package Manager
 
-## 📦 Instalacion (Swift Package Manager)
+## 📦 Instalación (Swift Package Manager)
 
-### Via Xcode
+### Vía Xcode
 
 1. Abre tu proyecto en Xcode
 2. Ve a **File → Add Packages...**
 3. Ingresa la URL del repositorio: `https://github.com/gentle-giraffe-apps/SmartAsyncImage.git`
-4. Elige una regla de version (o `main` durante el desarrollo)
+4. Elige una regla de versión (o `main` durante el desarrollo)
 5. Agrega el producto **SmartAsyncImage** a tu target de la app
 
-### Via `Package.swift`
+### Vía `Package.swift`
 
 ```swift
 dependencies: [
@@ -49,32 +49,32 @@ dependencies: [
 
 Luego agrega `"SmartAsyncImage"` a las `dependencies` de tu target.
 
-## App de Demostracion
+## App de Demostración
 
-Se incluye una app de demostracion en SwiftUI en este repositorio usando una referencia local al paquete.
+Se incluye una app de demostración en SwiftUI en este repositorio usando una referencia local al paquete.
 
 **Ruta:**
 ```
 Demo/SmartAsyncImageDemo/SmartAsyncImageDemo.xcodeproj
 ```
 
-### Como Ejecutar
+### Cómo Ejecutar
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/gentle-giraffe-apps/SmartAsyncImage.git
    ```
-2. Abre el proyecto de demostracion:
+2. Abre el proyecto de demostración:
    ```
    Demo/SmartAsyncImageDemo/SmartAsyncImageDemo.xcodeproj
    ```
 3. Selecciona un simulador con iOS 17+.
 4. Compila y ejecuta (⌘R).
 
-El proyecto esta preconfigurado con una referencia local de Swift Package a `SmartAsyncImage` y deberia ejecutarse sin configuracion adicional.
+El proyecto está preconfigurado con una referencia local de Swift Package a `SmartAsyncImage` y debería ejecutarse sin configuración adicional.
 
 ## Uso
 
-### Ejemplo Rapido (SwiftUI)
+### Ejemplo Rápido (SwiftUI)
 ```swift
 import SwiftUI
 import SmartAsyncImage
@@ -108,23 +108,23 @@ struct MinimalRemoteImageView: View {
 
 ## Calidad y Herramientas
 
-Este proyecto aplica controles de calidad mediante CI y analisis estatico:
+Este proyecto aplica controles de calidad mediante CI y análisis estático:
 
 - **CI:** Todos los commits a `main` deben pasar las verificaciones de GitHub Actions
-- **Analisis estatico:** DeepSource se ejecuta en cada commit a `main`.
-  La insignia indica el numero actual de problemas pendientes de analisis estatico.
-- **Cobertura de tests:** Codecov reporta la cobertura de lineas para la rama `main`
+- **Análisis estático:** DeepSource se ejecuta en cada commit a `main`.
+  La insignia indica el número actual de problemas pendientes de análisis estático.
+- **Cobertura de tests:** Codecov reporta la cobertura de líneas para la rama `main`
 
 <sub><strong>Captura de Codecov</strong></sub><br/>
 <a href="https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage">
   <img
     src="https://codecov.io/gh/gentle-giraffe-apps/SmartAsyncImage/graphs/icicle.svg"
     height="80"
-    alt="Captura de cobertura de codigo por archivo y modulo (grafico de arbol de Codecov)"
+    alt="Captura de cobertura de código por archivo y módulo (gráfico de árbol de Codecov)"
   />
 </a>
 
-Estas verificaciones tienen como objetivo mantener el sistema de diseno seguro para evolucionar con el tiempo.
+Estas verificaciones tienen como objetivo mantener el sistema de diseño seguro para evolucionar con el tiempo.
 
 ---
 
@@ -145,7 +145,7 @@ flowchart TD
 
 ## 🤖 Nota sobre Herramientas
 
-Partes de la redaccion y el refinamiento editorial en este repositorio fueron aceleradas utilizando modelos de lenguaje grandes (incluyendo ChatGPT, Claude y Gemini) bajo diseno, validacion y aprobacion final humana directa. Todas las decisiones tecnicas, el codigo y las conclusiones arquitectonicas son de autoria y verificacion del mantenedor del repositorio.
+Partes de la redacción y el refinamiento editorial en este repositorio fueron aceleradas utilizando modelos de lenguaje grandes (incluyendo ChatGPT, Claude y Gemini) bajo diseño, validación y aprobación final humana directa. Todas las decisiones técnicas, el código y las conclusiones arquitectónicas son de autoría y verificación del mantenedor del repositorio.
 
 ---
 

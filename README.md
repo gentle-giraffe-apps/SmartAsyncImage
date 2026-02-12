@@ -12,7 +12,7 @@ A smarter, faster `AsyncImage` for SwiftUI (iOS) with built-in in-memory and dis
 ![Last commit](https://img.shields.io/github/last-commit/gentle-giraffe-apps/SmartAsyncImage)
 [![DeepSource](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage.svg/?label=active+issues&show_trend=true)](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage/)
 
-> 🌍 **Language** · English · [Español](Docs/README.es.md) · [Português (Brasil)](Docs/README.pt-BR.md) · [日本語](Docs/README.ja.md)
+> 🌍 **Language** · English · [Español](Docs/README.es.md) · [Português (Brasil)](Docs/README.pt-BR.md) · [日本語](Docs/README.ja.md) · [简体中文](Docs/README.zh-CN.md) · [한국어](Docs/README.ko.md) · [Русский](Docs/README.ru.md)
 
 ## Features
 - SwiftUI-friendly API with an observable view model

@@ -12,7 +12,7 @@ SwiftUI (iOS) 向けの、より高速でスマートな `AsyncImage`。メモ�
 ![Last commit](https://img.shields.io/github/last-commit/gentle-giraffe-apps/SmartAsyncImage)
 [![DeepSource](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage.svg/?label=active+issues&show_trend=true)](https://app.deepsource.com/gh/gentle-giraffe-apps/SmartAsyncImage/)
 
-> **言語** · [English](../README.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · 日本語
+> 🌍 **言語** · [English](../README.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · 日本語 · [简体中文](README.zh-CN.md) · [한국어](README.ko.md) · [Русский](README.ru.md)
 
 ## 特徴
 - Observable なビューモデルを備えた SwiftUI 対応 API
