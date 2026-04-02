@@ -4,7 +4,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
-public protocol SmartAsyncImageMemoryCacheProtocol {
+public protocol SmartAsyncImageMemoryCacheProtocol: Sendable {
     func image(for url: URL) async throws -> UIImage
 }
 

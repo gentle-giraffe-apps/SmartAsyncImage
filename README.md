@@ -43,7 +43,7 @@ A smarter, faster `AsyncImage` for SwiftUI (iOS) with built-in in-memory and dis
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/gentle-giraffe-apps/SmartAsyncImage.git", from: "1.0.0")
+    .package(url: "https://github.com/gentle-giraffe-apps/SmartAsyncImage.git", from: "0.1.1")
 ]
 ```
 
