@@ -43,7 +43,7 @@
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/gentle-giraffe-apps/SmartAsyncImage.git", from: "1.0.0")
+    .package(url: "https://github.com/gentle-giraffe-apps/SmartAsyncImage.git", from: "0.1.1")
 ]
 ```
 
